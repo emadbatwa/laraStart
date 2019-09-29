@@ -18,3 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+// must be a last route to solve 404 in vue
+Route::get('{path}','HomeController@index')->where( 'path', '([A-z\d-/_.]+)?' );
+
