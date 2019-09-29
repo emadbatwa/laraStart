@@ -21,16 +21,19 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Type</th>
+                                <th>Registered At</th>
                                 <th>Modify</th>
                             </tr>
 
 
-                            <tr>
+                            <tr v-for="user in users" :key="user.id">
 
-                                <td>1</td>
-                                <td>Emad</td>
-                                <td>emad.batwa@gmail.com</td>
-                                <td>Admin</td>
+                                <td>{{user.id}}</td>
+                                <td>{{user.name}}</td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.type}}</td>
+                                <td>{{user.created_at}}</td>
+
 
                                 <td>
                                     <a href="#">
@@ -112,7 +115,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Create</button>
+                            <button type="submit" class="btn btn-primary">Create</button>
                         </div>
                     </form>
 
@@ -132,6 +135,7 @@
     export default {
         data() {
             return {
+                users : {},
                 form: new Form({
                     name: '',
                     email: '',
@@ -150,10 +154,14 @@
             createUser(){
                 this.form.post('api/user');
 
-            }
+            },
+            loadUser(){
+                axios.get("api/user").then(({ data }) => (this.users = data.data))
+
+            },
         },
-        mounted() {
-            console.log('Component mounted Users.')
+        created() {
+            this.loadUser();
         }
     }
 </script>
