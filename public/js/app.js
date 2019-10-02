@@ -2135,7 +2135,14 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         _this2.$Progress.finish();
-      })["catch"](function () {});
+      })["catch"](function (err) {
+        if (err.response.status === 422) {
+          Toast.fire({
+            type: 'error',
+            title: err.response.statusText
+          });
+        }
+      });
     },
     loadUser: function loadUser() {
       var _this3 = this;
@@ -2151,6 +2158,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this4 = this;
 
+    console.log('started load');
     this.loadUser();
     Fire.$on('AfterCreate', function () {
       _this4.loadUser();

@@ -199,7 +199,17 @@
                         this.$Progress.finish();
 
                     })
-                    .catch(() => {
+                    .catch((err) => {
+
+
+                        if (err.response.status === 422) {
+                            Toast.fire({
+                                type: 'error',
+                                title: err.response.statusText,
+                            });
+                        }
+
+
 
                     });
 
@@ -214,6 +224,8 @@
             },
         },
         created() {
+            console.log('started load');
+
             this.loadUser();
             Fire.$on('AfterCreate', () => {
                 this.loadUser();
